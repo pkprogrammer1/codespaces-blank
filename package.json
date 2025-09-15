@@ -1,23 +1,28 @@
 {
-"name": "apollo-prisma-boilerplate",
-"version": "1.0.0",
-"private": true,
-"scripts": {
-"start": "node dist/index.js",
-"dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-"build": "tsc",
-"prisma:generate": "prisma generate",
-"prisma:migrate": "prisma migrate dev --name init --preview-feature"
-},
-"dependencies": {
-"@prisma/client": "^5.0.0",
-"apollo-server": "^4.0.0",
-"graphql": "^16.0.0",
-"dotenv": "^16.0.0"
-},
-"devDependencies": {
-"prisma": "^5.0.0",
-"ts-node-dev": "^2.0.0",
-"typescript": "^5.0.0"
-}
+  "name": "apollo-prisma-scalable",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:schema": "node prisma/scripts/build-schema.js",
+    "prisma:generate": "npm run build:schema && prisma generate --schema=prisma/schema.prisma",
+    "prisma:migrate": "npm run build:schema && prisma migrate dev --schema=prisma/schema.prisma",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.0.0",
+    "@graphql-tools/merge": "^8.2.0",
+    "@graphql-tools/schema": "^8.3.0",
+    "@apollo/server": "^4.0.0",
+    "@apollo/server/express4": "^4.0.0",
+    "express": "^4.18.2",
+    "graphql": "^16.6.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "prisma": "^5.0.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.2.2"
+  }
 }
