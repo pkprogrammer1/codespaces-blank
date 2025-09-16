@@ -46,10 +46,31 @@ A production-ready, scalable GraphQL API boilerplate built with Apollo Server 4,
 ### Prerequisites
 
 - Node.js 18+
-- Docker & Docker Compose
+- Docker & Docker Compose (recommended)
 - npm or yarn
 
-### Quick Start with Docker
+### Option 1: Quick Start with Automated Setup
+
+1. **Clone and navigate to the project:**
+   ```bash
+   git clone <repository-url>
+   cd apollo-prisma-scalable
+   ```
+
+2. **Run the automated setup:**
+   ```bash
+   npm run setup
+   ```
+
+This script will:
+- Install dependencies
+- Start PostgreSQL (via Docker)
+- Set up environment variables
+- Run database migrations
+- Seed the database
+- Start the development server
+
+### Option 2: Quick Start with Docker
 
 1. **Clone and navigate to the project:**
    ```bash
@@ -59,14 +80,14 @@ A production-ready, scalable GraphQL API boilerplate built with Apollo Server 4,
 
 2. **Start the entire stack:**
    ```bash
-   docker-compose up
+   docker compose up
    ```
 
 This will:
 - Start PostgreSQL database
+- Build and start the API server
 - Run database migrations
 - Seed the database with sample data
-- Start the GraphQL API server
 
 🎉 **Your API will be available at:**
 - GraphQL Playground: http://localhost:4000/graphql
@@ -81,7 +102,7 @@ This will:
 
 2. **Start PostgreSQL (development):**
    ```bash
-   docker-compose -f docker-compose.dev.yml up -d
+   docker compose -f docker-compose.dev.yml up -d
    ```
 
 3. **Set up environment variables:**
@@ -114,6 +135,8 @@ This will:
 
 | Script | Description |
 |--------|-------------|
+| `npm run setup` | Automated development environment setup |
+| `npm run validate` | Validate project structure and configuration |
 | `npm run dev` | Start development server with hot reload |
 | `npm run build` | Build the TypeScript project |
 | `npm start` | Start production server |
@@ -300,27 +323,27 @@ mutation DeleteUser($id: ID!) {
 
 **Build and start all services:**
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 **Start services in detached mode:**
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 **View logs:**
 ```bash
-docker-compose logs -f
+docker compose logs -f
 ```
 
 **Stop all services:**
 ```bash
-docker-compose down
+docker compose down
 ```
 
 **Remove volumes (reset database):**
 ```bash
-docker-compose down -v
+docker compose down -v
 ```
 
 ## 🔄 Database Migrations
