@@ -26,7 +26,7 @@ export const rideResolvers = {
   Mutation: {
     createRide: async (
       _: any,
-      { input }: { input: { from: string; to: string; price: number; userId: string } },
+      { input }: { input: { from: string; to: string; price: number; userId: string, phone: string } },
       { prisma }: Context
     ) => {
       return prisma.ride.create({

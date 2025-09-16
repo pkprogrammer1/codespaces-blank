@@ -3,6 +3,7 @@ export const userTypeDefs = `
     id: ID!
     email: String!
     name: String
+    phone: String
     rides: [Ride!]!
     createdAt: String!
     updatedAt: String!
@@ -11,11 +12,13 @@ export const userTypeDefs = `
   input CreateUserInput {
     email: String!
     name: String
+    phone: String
   }
 
   input UpdateUserInput {
     email: String
     name: String
+    phone: String
   }
 
   extend type Query {
