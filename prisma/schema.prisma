@@ -1,6 +1,11 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+//
+// CONFIGURATION
+// =============
+//
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,27 +15,66 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//
+// USER MODELS
+// ===========
+//
+
+/// Represents a user in the system
+/// @see prisma/models/user.ts for TypeScript interface
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
+  id        String    @id @default(cuid())
+  email     String    @unique
   name      String?
   phone     String?
-  rides     Ride[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  address   String?
+  rides     Ride[]    // One-to-many relationship with Ride
+  payments  Payment[] // One-to-many relationship with Payment
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   @@map("users")
 }
 
+//
+// RIDE MODELS
+// ===========
+//
+
+/// Represents a ride/trip in the system
+/// @see prisma/models/ride.ts for TypeScript interface
 model Ride {
-  id          String   @id @default(cuid())
-  from        String
-  to          String
+  id          String    @id @default(cuid())
+  from        String    // Start location
+  to          String    // End location
   price       Float
   userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payment     Payment?  // One-to-one relationship with Payment
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@map("rides")
+}
+
+//
+// PAYMENT MODELS
+// =============
+//
+
+/// Represents a payment for a ride
+/// @see prisma/models/payment.ts for TypeScript interface
+model Payment {
+  id          String    @id @default(cuid())
+  amount      Float
+  status      String    // pending, completed, failed
+  method      String    // credit_card, cash, wallet
+  rideId      String    @unique  // One-to-one relationship with Ride
+  ride        Ride      @relation(fields: [rideId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("payments")
 }
